@@ -209,6 +209,7 @@ Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  
 
 @protocol MyStateful <CNCHStateful>
 
+// Method signature with updated types
 - (void)stateMachine:(nonnull MyStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<MyStateful> __nullable))completionHandler;
 
 @end
@@ -221,7 +222,7 @@ Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  
 
 @interface MyStateMachine : CNCHStateMachine
 
-// Updated method signatures
+// Method signatures with updated types
 - (nullable instancetype)initWithState:(nonnull id<MyStateful>)state NS_DESIGNATED_INITIALIZER;
 @property (nullable, readonly) id<MyStateful> state;
 
