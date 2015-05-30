@@ -8,25 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT NSString * const CNCHStateMachineSuspendedNotification;
-FOUNDATION_EXPORT NSString * const CNCHStateMachineInvalidatedNotification;
+FOUNDATION_EXPORT  NSString * __nonnull const CNCHStateMachineSuspendedNotification;
+FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotification;
 
 @class CNCHStateMachine;
 
 @protocol CNCHState <NSObject>
 
-- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void(^)(id<CNCHState> state))completionHandler;
+- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void(^)(__nullable id<CNCHState> state))completionHandler;
 
 @end
 
 @interface CNCHStateMachine : NSObject
 
+- (nullable instancetype)initWithState:(nonnull id<CNCHState>)state;
+
 - (void)resume;
 - (void)suspend;
 - (void)invalidate;
 
-- (void)flushWithCompletionHandler:(void(^)(void))completionHandler;
+- (void)flushWithCompletionHandler:(nonnull void(^)(void))completionHandler;
 
-@property (readonly) id<CNCHState> state;
+@property (nullable, readonly) id<CNCHState> state;
 
 @end
