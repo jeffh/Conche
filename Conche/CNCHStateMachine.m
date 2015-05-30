@@ -21,6 +21,7 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 	dispatch_group_t __group;
 	
 	OSSpinLock __stateSpinLock;
+	OSSpinLock __sourceSpinlock;
 }
 
 - (instancetype)initWithState:(id<CNCHStateful>)state {
@@ -34,6 +35,7 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 		_state = state;
 		
 		__stateSpinLock = OS_SPINLOCK_INIT;
+		__sourceSpinlock = OS_SPINLOCK_INIT;
 		
 		__queue = dispatch_queue_create( NULL, DISPATCH_QUEUE_SERIAL );
 		__group = dispatch_group_create();
@@ -94,12 +96,19 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 }
 
 - (void)invalidate {
-	dispatch_group_enter( __group );
-	dispatch_source_cancel( __source );
 	
-	dispatch_async( __queue, ^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:CNCHStateMachineInvalidatedNotification object:self];
-	});
+	OSSpinLockLock( &__sourceSpinlock );
+	
+	if( dispatch_source_testcancel( __source ) == 0 ) {
+		dispatch_group_enter( __group );
+		dispatch_source_cancel( __source );
+		
+		dispatch_async( __queue, ^{
+			[[NSNotificationCenter defaultCenter] postNotificationName:CNCHStateMachineInvalidatedNotification object:self];
+		});
+	}
+	
+	OSSpinLockUnlock( &__sourceSpinlock );
 }
 
 - (void)flushWithCompletionHandler:(void (^)(void))completionHandler {
