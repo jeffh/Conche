@@ -199,3 +199,34 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 2015-05-30 14:51:35.586 TickTock[48539:38682930] Tick
 2015-05-30 14:51:37.583 TickTock[48539:38683443] Done
 ```
+
+# Observation & Delegation
+
+Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  This works fine during early prototyping, but as your state machine grows in size and complexity, observing via KVO is bound to become difficult to maintain.  Rather, we recommend implementing a `CNCHStateMachine` subclass, adding whatever properties a user may see it.  Additionally, we recommend creating an analagous sub-protocol of `CNCHStateful` and updating the relevant type specifiers accordingly.
+
+```
+@class MyStateMachine;
+
+@protocol MyStateful <CNCHStateful>
+
+- (void)stateMachine:(nonnull MyStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<MyStateful> __nullable))completionHandler;
+
+@end
+
+@protocol MyStateMachineDelegate <NSObject>
+
+- (void)someDelegateMethod;
+
+@end
+
+@interface MyStateMachine : CNCHStateMachine
+
+// Updated method signatures
+- (nullable instancetype)initWithState:(nonnull id<MyStateful>)state NS_DESIGNATED_INITIALIZER;
+@property (nullable, readonly) id<MyStateful> state;
+
+// New delegate property
+@property (nullable, weak) id<MyStateMachineDelegate> delegate;
+
+@end
+```
