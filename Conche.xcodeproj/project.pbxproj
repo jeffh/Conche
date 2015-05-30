@@ -10,7 +10,7 @@
 		FB9E3ABD1B19AF5400EF1D41 /* Conche.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E3ABC1B19AF5400EF1D41 /* Conche.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB9E3AC31B19AF5400EF1D41 /* Conche.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E3AB71B19AF5400EF1D41 /* Conche.framework */; };
 		FB9E3ACA1B19AF5400EF1D41 /* ConcheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB9E3AC91B19AF5400EF1D41 /* ConcheTests.m */; };
-		FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E3AD31B19B04A00EF1D41 /* CNCHStateMachine.h */; };
+		FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E3AD31B19B04A00EF1D41 /* CNCHStateMachine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB9E3AD61B19B04A00EF1D41 /* CNCHStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = FB9E3AD41B19B04A00EF1D41 /* CNCHStateMachine.m */; };
 /* End PBXBuildFile section */
 
@@ -115,8 +115,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */,
 				FB9E3ABD1B19AF5400EF1D41 /* Conche.h in Headers */,
+				FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
