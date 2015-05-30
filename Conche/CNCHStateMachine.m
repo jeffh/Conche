@@ -49,9 +49,10 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 			
 			dispatch_group_enter( __group );
 			
-			__block volatile int32_t completionHandlerInvocations = 0;
+			__block volatile BOOL completionHandlerInvoked = NO;
 			[self.state stateMachine:self transitionWithCompletionHandler:^(__nullable id<CNCHStateful> state) {
-				if( (completionHandlerInvocations = OSAtomicIncrement32( &completionHandlerInvocations )) > 1 ) {
+				
+				if( OSAtomicTestAndSetBarrier(1, &completionHandlerInvoked) == YES ) {
 					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"competion handler cannot be called more than once" userInfo:nil];
 				}
 				
