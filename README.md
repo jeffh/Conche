@@ -101,7 +101,7 @@ Upon `suspend` of `invalidate` being called, `CNCHStateMachine` will post `CNCHS
 
 # Example 2 (Tick-Tock w/ Cancellation)
 
-For the sake of this example. we will be bumping up the Tick-Tock interval to ten seconds and have the invalidation invoked after fourty-two seconds.
+For the sake of this example. we will be bumping up the Tick-Tock interval to ten seconds and have the invalidation invoked after fourty-two seconds.  We will also be replacing `dispatch_after` with a dispatch timer as the former doesn't have support for cancellation.
 
 ## Code
 ```
