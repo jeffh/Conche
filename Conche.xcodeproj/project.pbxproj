@@ -10,6 +10,8 @@
 		FB9E3ABD1B19AF5400EF1D41 /* Conche.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E3ABC1B19AF5400EF1D41 /* Conche.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB9E3AC31B19AF5400EF1D41 /* Conche.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E3AB71B19AF5400EF1D41 /* Conche.framework */; };
 		FB9E3ACA1B19AF5400EF1D41 /* ConcheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB9E3AC91B19AF5400EF1D41 /* ConcheTests.m */; };
+		FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E3AD31B19B04A00EF1D41 /* CNCHStateMachine.h */; };
+		FB9E3AD61B19B04A00EF1D41 /* CNCHStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = FB9E3AD41B19B04A00EF1D41 /* CNCHStateMachine.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		FB9E3AC21B19AF5400EF1D41 /* ConcheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9E3AC81B19AF5400EF1D41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB9E3AC91B19AF5400EF1D41 /* ConcheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConcheTests.m; sourceTree = "<group>"; };
+		FB9E3AD31B19B04A00EF1D41 /* CNCHStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNCHStateMachine.h; sourceTree = "<group>"; };
+		FB9E3AD41B19B04A00EF1D41 /* CNCHStateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNCHStateMachine.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			children = (
 				FB9E3ABC1B19AF5400EF1D41 /* Conche.h */,
 				FB9E3ABA1B19AF5400EF1D41 /* Supporting Files */,
+				FB9E3AD31B19B04A00EF1D41 /* CNCHStateMachine.h */,
+				FB9E3AD41B19B04A00EF1D41 /* CNCHStateMachine.m */,
 			);
 			path = Conche;
 			sourceTree = "<group>";
@@ -109,6 +115,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB9E3AD51B19B04A00EF1D41 /* CNCHStateMachine.h in Headers */,
 				FB9E3ABD1B19AF5400EF1D41 /* Conche.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB9E3AD61B19B04A00EF1D41 /* CNCHStateMachine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +407,7 @@
 				FB9E3ACF1B19AF5400EF1D41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FB9E3AD01B19AF5400EF1D41 /* Build configuration list for PBXNativeTarget "ConcheTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +416,7 @@
 				FB9E3AD21B19AF5400EF1D41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
