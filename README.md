@@ -19,7 +19,6 @@ Below is an example of Conche being used in an application that prints out text 
 
 @end
 
-
 @implementation Tick
 
 - (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
@@ -58,12 +57,9 @@ Below is an example of Conche being used in an application that prints out text 
 @end
 
 
-
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
-	
 	CNCHStateMachine *stateMachine = [[CNCHStateMachine alloc] initWithState:[[Tick alloc] init]];
 	[stateMachine resume];
 	
@@ -92,7 +88,6 @@ Below is an example of Conche being used in an application that prints out text 
 2015-05-30 14:29:11.966 TickTock[48334:38612724] Tick
 2015-05-30 14:29:13.045 TickTock[48334:38612724] Tock
 2015-05-30 14:29:14.130 TickTock[48334:38612780] Done
-
 ```
 
 # Suspension & Cancellation
@@ -112,7 +107,6 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 @interface Tock : NSObject <CNCHStateful>
 
 @end
-
 
 @implementation Tick
 
@@ -179,12 +173,9 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 @end
 
 
-
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
-	
 	CNCHStateMachine *stateMachine = [[CNCHStateMachine alloc] initWithState:[[Tick alloc] init]];
 	[stateMachine resume];
 	
