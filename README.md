@@ -94,3 +94,117 @@ Below is an example of Conche being used in an application that prints out text 
 2015-05-30 14:29:14.130 TickTock[48334:38612780] Done
 
 ```
+
+# Suspension & Cancellation
+
+Upon `suspend` of `invalidate` being called, `CNCHStateMachine` will post `CNCHStateMachineSuspendedNotification` and `CNCHStateMachineInvalidatedNotification` respectively on its private serial queue.  This gives any state that that is currently in-flight the opportunity to implement proper clean up logic.
+
+# Example 2 (Tick-Tock w/ Cancellation)
+
+For the sake of this example. we will be bumping up the Tick-Tock interval to ten seconds and have the invalidation invoked after fourty-two seconds.
+
+## Code
+```
+@interface Tick : NSObject <CNCHStateful>
+
+@end
+
+@interface Tock : NSObject <CNCHStateful>
+
+@end
+
+
+@implementation Tick
+
+- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+	
+	NSLog(@"Tick");
+	
+	dispatch_queue_t queue = dispatch_queue_create( NULL, DISPATCH_QUEUE_SERIAL );
+	
+	dispatch_source_t timer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue );
+	dispatch_source_set_timer( timer, dispatch_time( DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC ), 0, 0 );
+	dispatch_source_set_event_handler( timer, ^{
+		dispatch_source_cancel( timer );
+	});
+	
+	__block id invalidationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:CNCHStateMachineInvalidatedNotification object:stateMachine queue:nil usingBlock:^(NSNotification *note) {
+		dispatch_async( queue, ^{
+			if( dispatch_source_testcancel( timer ) == 0 ) {
+				dispatch_source_cancel( timer );
+			}
+		});
+	}];
+	
+	dispatch_source_set_cancel_handler( timer, ^{
+		[[NSNotificationCenter defaultCenter] removeObserver:invalidationObserver];
+		completionHandler( [[Tock alloc] init] );
+	});
+	
+	dispatch_resume(timer);
+}
+
+@end
+
+@implementation Tock
+
+- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+	
+	NSLog(@"Tock");
+	
+	dispatch_queue_t queue = dispatch_queue_create( NULL, DISPATCH_QUEUE_SERIAL );
+	
+	dispatch_source_t timer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue );
+	dispatch_source_set_timer( timer, dispatch_time( DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC ), 0, 0 );
+	dispatch_source_set_event_handler( timer, ^{
+		dispatch_source_cancel( timer );
+	});
+	
+	__block id invalidationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:CNCHStateMachineInvalidatedNotification object:stateMachine queue:nil usingBlock:^(NSNotification *note) {
+		dispatch_async( queue, ^{
+			if( dispatch_source_testcancel( timer ) == 0 ) {
+				dispatch_source_cancel( timer );
+			}
+		});
+	}];
+	
+	dispatch_source_set_cancel_handler( timer, ^{
+		[[NSNotificationCenter defaultCenter] removeObserver:invalidationObserver];
+		completionHandler( [[Tick alloc] init] );
+	});
+	
+	dispatch_resume(timer);
+}
+
+@end
+
+
+
+@implementation AppDelegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	// Insert code here to initialize your application
+	
+	CNCHStateMachine *stateMachine = [[CNCHStateMachine alloc] initWithState:[[Tick alloc] init]];
+	[stateMachine resume];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(42 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[stateMachine invalidate];
+		[stateMachine flushWithCompletionHandler:^{
+			NSLog(@"Done");
+		}];
+	});
+}
+
+@end
+```
+
+## Output
+```
+2015-05-30 14:50:55.584 TickTock[48539:38680303] Tick
+2015-05-30 14:51:05.585 TickTock[48539:38680355] Tock
+2015-05-30 14:51:15.585 TickTock[48539:38680303] Tick
+2015-05-30 14:51:25.585 TickTock[48539:38680355] Tock
+2015-05-30 14:51:35.586 TickTock[48539:38682930] Tick
+2015-05-30 14:51:37.583 TickTock[48539:38683443] Done
+```
