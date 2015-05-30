@@ -47,6 +47,8 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 			
 			dispatch_suspend( __source );
 			
+			dispatch_group_enter( __group );
+			
 			__block volatile int32_t completionHandlerInvocations = 0;
 			[self.state stateMachine:self transitionWithCompletionHandler:^(__nullable id<CNCHState> state) {
 				if( (completionHandlerInvocations = OSAtomicIncrement32( &completionHandlerInvocations )) > 1 ) {
@@ -63,8 +65,10 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 				
 				if( _state != nil ) {
 					dispatch_source_merge_data( __source, 1 );
-					dispatch_resume( __source );
 				}
+				
+				dispatch_group_leave( __group );
+				dispatch_resume( __source );
 			}];
 		});
 		
