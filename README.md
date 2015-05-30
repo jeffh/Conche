@@ -202,7 +202,7 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 
 # Observation & Delegation
 
-Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  This works fine during early prototyping, but as your state machine grows in size and complexity, observing via KVO is bound to become difficult to maintain.  Rather, we recommend implementing a `CNCHStateMachine` subclass, adding whatever properties a user may see it.  Additionally, we recommend creating an analagous sub-protocol of `CNCHStateful` and updating the relevant type specifiers accordingly.
+Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  This works fine during early prototyping, but as your state machine grows in size and complexity, observing via KVO is bound to become complex and difficult to maintain.  Rather, we recommend implementing a `CNCHStateMachine` subclass, adding whatever delegate properties you see it.  Additionally, we recommend creating an analagous sub-protocol of `CNCHStateful` and updating the relevant type specifiers accordingly.
 
 ```
 @class MyStateMachine;
@@ -230,3 +230,5 @@ Out of the box, `CNCHStateMachine` contains a KVO-observable `state` property.  
 
 @end
 ```
+
+Conformers of `CNCHStateful` or potential sub-protocols should not be concerned with portability across different state machine subclasses;  a conformer of a `CNCHStateful` subprotocol designed for `StateMachineSubclassA` should only run on `StateMachineSubclassA`.
