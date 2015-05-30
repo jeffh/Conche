@@ -7,7 +7,7 @@ Conche is a lightweight framework for implementing state machines in Objective-C
 
 # Example (Tick-Tock)
 
-Below is an example of Conche being used in a application that prints out text every second, alternating between `Tick` and `Tock`.  After ten seconds, it invalidates and flushes the state machine.
+Below is an example of Conche being used in an application that prints out text every second, alternating between `Tick` and `Tock`.  After ten seconds, it invalidates and flushes the state machine.
 
 ## Code
 ```
