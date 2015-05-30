@@ -14,7 +14,7 @@ NSString * const CNCHStateMachineSuspendedNotification = @"CNCHStateMachineSuspe
 NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInvalidatedNotification";
 
 @implementation CNCHStateMachine {
-	id<CNCHState> _state;
+	id<CNCHStateful> _state;
 	
 	dispatch_queue_t __queue;
 	dispatch_source_t __source;
@@ -23,7 +23,7 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 	OSSpinLock __stateSpinLock;
 }
 
-- (instancetype)initWithState:(id<CNCHState>)state {
+- (instancetype)initWithState:(id<CNCHStateful>)state {
 	
 	if( state == nil ) {
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"state cannot be nil" userInfo:nil];
@@ -50,7 +50,7 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 			dispatch_group_enter( __group );
 			
 			__block volatile int32_t completionHandlerInvocations = 0;
-			[self.state stateMachine:self transitionWithCompletionHandler:^(__nullable id<CNCHState> state) {
+			[self.state stateMachine:self transitionWithCompletionHandler:^(__nullable id<CNCHStateful> state) {
 				if( (completionHandlerInvocations = OSAtomicIncrement32( &completionHandlerInvocations )) > 1 ) {
 					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"competion handler cannot be called more than once" userInfo:nil];
 				}
@@ -110,9 +110,9 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 	dispatch_group_notify( __group, __queue, completionHandler );
 }
 
-- (id<CNCHState>)state {
+- (id<CNCHStateful>)state {
 	
-	id<CNCHState> state = nil;
+	id<CNCHStateful> state = nil;
 	OSSpinLockLock( &__stateSpinLock );
 	state = _state;
 	OSSpinLockUnlock( &__stateSpinLock );
