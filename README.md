@@ -19,7 +19,6 @@ Below is an example of Conche being used in an application that prints out text 
 
 @end
 
-
 @implementation Tick
 
 - (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
@@ -58,12 +57,9 @@ Below is an example of Conche being used in an application that prints out text 
 @end
 
 
-
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
-	
 	CNCHStateMachine *stateMachine = [[CNCHStateMachine alloc] initWithState:[[Tick alloc] init]];
 	[stateMachine resume];
 	
@@ -92,12 +88,11 @@ Below is an example of Conche being used in an application that prints out text 
 2015-05-30 14:29:11.966 TickTock[48334:38612724] Tick
 2015-05-30 14:29:13.045 TickTock[48334:38612724] Tock
 2015-05-30 14:29:14.130 TickTock[48334:38612780] Done
-
 ```
 
 # Suspension & Cancellation
 
-Upon `suspend` of `invalidate` being called, `CNCHStateMachine` will post `CNCHStateMachineSuspendedNotification` and `CNCHStateMachineInvalidatedNotification` respectively on its private serial queue.  This gives any state that is currently in-flight the opportunity to implement proper clean up logic.
+Upon `suspend` or `invalidate` being called, `CNCHStateMachine` will post `CNCHStateMachineSuspendedNotification` or `CNCHStateMachineInvalidatedNotification` respectively on its private serial queue.  This gives any state that is currently in-flight the opportunity to implement proper clean up logic.
 
 # Example 2 (Tick-Tock w/ Cancellation)
 
@@ -112,7 +107,6 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 @interface Tock : NSObject <CNCHStateful>
 
 @end
-
 
 @implementation Tick
 
@@ -179,12 +173,9 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 @end
 
 
-
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
-	
 	CNCHStateMachine *stateMachine = [[CNCHStateMachine alloc] initWithState:[[Tick alloc] init]];
 	[stateMachine resume];
 	
@@ -208,3 +199,37 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 2015-05-30 14:51:35.586 TickTock[48539:38682930] Tick
 2015-05-30 14:51:37.583 TickTock[48539:38683443] Done
 ```
+
+# Observation & Delegation
+
+Out of the box, `CNCHStateMachine` provides a KVO-observable `state` property.  This works fine during early prototyping, but as your state machine grows in size and complexity, observing via KVO is bound to become complex and difficult to maintain.  Rather, we recommend implementing a `CNCHStateMachine` subclass, adding whatever delegate properties you see fit.  Additionally, we recommend creating an analagous sub-protocol of `CNCHStateful` and updating the relevant type specifiers accordingly.
+
+```
+@class MyStateMachine;
+
+@protocol MyStateful <CNCHStateful>
+
+// Method signature with updated types
+- (void)stateMachine:(nonnull MyStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<MyStateful> __nullable))completionHandler;
+
+@end
+
+@protocol MyStateMachineDelegate <NSObject>
+
+- (void)someDelegateMethod;
+
+@end
+
+@interface MyStateMachine : CNCHStateMachine
+
+// Method signatures with updated types
+- (nullable instancetype)initWithState:(nonnull id<MyStateful>)state NS_DESIGNATED_INITIALIZER;
+@property (nullable, readonly) id<MyStateful> state;
+
+// New delegate property
+@property (nullable, weak) id<MyStateMachineDelegate> delegate;
+
+@end
+```
+
+Conformers of `CNCHStateful` or potential sub-protocols should not be concerned with portability across different state machine subclasses;  a conformer of a `CNCHStateful` subprotocol designed for `StateMachineSubclassA` should only run on `StateMachineSubclassA`.
