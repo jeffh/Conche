@@ -48,7 +48,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
 
 @interface CNCHStateMachine : NSObject
 
-- (nullable instancetype)init NS_UNAVAILABLE;
+- (nonnull instancetype)init NS_UNAVAILABLE;
 
 /*!
  @brief Returns a new \c CNCHStateMachine object with its initial state set to \c state.
@@ -60,7 +60,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
  
  @return A new \c CNCHStateMachine object with its initial state set to \c state.
  */
-- (nullable instancetype)initWithState:(nonnull id<CNCHStateful>)state NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithState:(nonnull id<CNCHStateful>)state NS_DESIGNATED_INITIALIZER;
 
 
 /*!
