@@ -92,7 +92,7 @@ Below is an example of Conche being used in an application that prints out text 
 
 # Suspension & Cancellation
 
-Upon `suspend` of `invalidate` being called, `CNCHStateMachine` will post `CNCHStateMachineSuspendedNotification` and `CNCHStateMachineInvalidatedNotification` respectively on its private serial queue.  This gives any state that is currently in-flight the opportunity to implement proper clean up logic.
+Upon `suspend` or `invalidate` being called, `CNCHStateMachine` will post `CNCHStateMachineSuspendedNotification` and `CNCHStateMachineInvalidatedNotification` respectively on its private serial queue.  This gives any state that is currently in-flight the opportunity to implement proper clean up logic.
 
 # Example 2 (Tick-Tock w/ Cancellation)
 
