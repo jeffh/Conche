@@ -76,7 +76,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
 /*!
  @brief Suspends the state machine.
  
- @discussion Suspends and resumes must be balanced before the connection may be invalidated.  
+ @discussion Suspends and resumes must be balanced before the state machine may be invalidated.  
  Posts \c CNCHStateMachineSuspendedNotification.
  
  */
