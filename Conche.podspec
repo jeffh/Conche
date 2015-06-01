@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Conche"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "A lightweight Objective-C state machine framework"
 
   s.description  = <<-DESC
@@ -16,10 +16,10 @@ DESC
   s.license      = { :type => 'MIT' }
 
   s.homepage     = "https://github.com/djs-code/Conche"
-  s.ios.deployment_target = "8.0"
-  s.osx.deployment_target = "10.10"
+  s.ios.deployment_target = "4.0"
+  s.osx.deployment_target = "10.6"
 
-  s.source       = { :git => "https://github.com/djs-code/Conche.git", :tag => "1.0.1" }
+  s.source       = { :git => "https://github.com/djs-code/Conche.git", :tag => "1.0.2" }
   s.source_files  = "Conche/*.{h,m}"
 
   s.requires_arc = true
