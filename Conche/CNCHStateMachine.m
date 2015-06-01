@@ -10,6 +10,7 @@
 
 #import "CNCHStateMachine.h"
 
+NSString * const CNCHStateMachineResumedNotification = @"CNCHStateMachineResumedNotification";
 NSString * const CNCHStateMachineSuspendedNotification = @"CNCHStateMachineSuspendedNotification";
 NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInvalidatedNotification";
 
@@ -84,6 +85,10 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 }
 
 - (void)resume {
+	dispatch_async( __queue, ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:CNCHStateMachineResumedNotification object:self];
+	});
+	
 	dispatch_resume( __source );
 }
 

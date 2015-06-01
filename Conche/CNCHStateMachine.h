@@ -12,6 +12,12 @@
 
 /*!
  This notification is posted on the \c CNCHStateMachine object's private serial queue
+ when @c[CNCHStateMachine resume]; is called.
+ */
+FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineResumedNotification;
+
+/*!
+ This notification is posted on the \c CNCHStateMachine object's private serial queue
  when @c[CNCHStateMachine suspend]; is called.
  */
 FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineSuspendedNotification;
