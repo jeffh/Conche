@@ -4,6 +4,22 @@ Conche is a lightweight framework for implementing state machines in Objective-C
 - High scalability via non-blocking design.
 - Precise control of the state machine class via its `resume`, `suspend`, and `invalidate` methods.
 - Flexibility through subclassing.
+ 
+All Conche code has been annotated for nullability where applicable and, as such, is Swift-ready.
+
+# Requirements
+
+The minimum targets for using Conche are OS X 10.6 & iOS 4.0.  Building from source requires Xcode 6.3.
+
+# Installing with CocoaPods
+
+Conche can easily be imported into your project through CocoaPods, an Objective-C dependancy manager.
+
+## Podfile
+```
+platform :ios, '8.0'
+pod "Conche"
+```
 
 # Example (Tick-Tock)
 
