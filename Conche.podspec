@@ -11,6 +11,10 @@ Conche is a lightweight framework for implementing state machines in Objective-C
 - Flexibility through subclassing.
 DESC
 
+  s.authors      = { 'Dan Stenmark' => 'daniel.j.stenmark@gmail.com' }
+
+  s.license      = { :type => 'MIT' }
+
   s.homepage     = "https://github.com/djs-code/Conche"
   s.ios.deployment_target = "8.0"
   s.osx.deployment_target = "10.10"
