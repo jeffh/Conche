@@ -13,7 +13,7 @@ The minimum targets for using Conche are OS X 10.6 & iOS 4.0.  Building from sou
 
 # Installing with CocoaPods
 
-Conche can easily be imported into your project through CocoaPods, an Objective-C dependancy manager.
+Conche can easily be imported into your project through [CocoaPods](https://cocoapods.org), an Objective-C dependancy manager.
 
 ## Podfile
 ```
