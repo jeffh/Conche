@@ -56,7 +56,7 @@ NSString * const CNCHStateMachineInvalidatedNotification = @"CNCHStateMachineInv
 			[self.state stateMachine:self transitionWithCompletionHandler:^(__nullable id<CNCHStateful> state) {
 				
 				if( OSAtomicTestAndSetBarrier(1, &completionHandlerInvoked) == YES ) {
-					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"competion handler cannot be called more than once" userInfo:nil];
+					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"completion handler cannot be called more than once" userInfo:nil];
 				}
 				
 				[self willChangeValueForKey:NSStringFromSelector(@selector(state))];
