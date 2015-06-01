@@ -26,7 +26,7 @@ Below is an example of Conche being used in an application that prints out text 
 	// Print out Tick
 	NSLog(@"Tick");
 	
-	// Sleep for a second before enqueueing the next state
+	// Enqueueing the next state after one second
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		completionHandler( [[Tock alloc] init] );
 	});
