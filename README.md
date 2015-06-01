@@ -21,7 +21,7 @@ Below is an example of Conche being used in an application that prints out text 
 
 @implementation Tick
 
-- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void (^)(id<CNCHStateful> __nullable))completionHandler {
 
 	// Print out Tick
 	NSLog(@"Tick");
@@ -36,7 +36,7 @@ Below is an example of Conche being used in an application that prints out text 
 
 @implementation Tock
 
-- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void (^)(id<CNCHStateful> __nullable))completionHandler {
 	
 	// Alternatively, we can suspend the state machine for a second instead.
 	// This is useful when you want to apply limits to how many times you
@@ -110,7 +110,7 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 
 @implementation Tick
 
-- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void (^)(id<CNCHStateful> __nullable))completionHandler {
 	
 	NSLog(@"Tick");
 	
@@ -142,7 +142,7 @@ For the sake of this example. we will be bumping up the Tick-Tock interval to te
 
 @implementation Tock
 
-- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<CNCHStateful> __nullable))completionHandler {
+- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void (^)(id<CNCHStateful> __nullable))completionHandler {
 	
 	NSLog(@"Tock");
 	
@@ -210,7 +210,7 @@ Out of the box, `CNCHStateMachine` provides a KVO-observable `state` property.  
 @protocol MyStateful <CNCHStateful>
 
 // Method signature with updated types
-- (void)stateMachine:(nonnull MyStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void (^)(id<MyStateful> __nullable))completionHandler;
+- (void)stateMachine:(MyStateMachine *)stateMachine transitionWithCompletionHandler:(void (^)(id<MyStateful> __nullable))completionHandler;
 
 @end
 
@@ -223,7 +223,7 @@ Out of the box, `CNCHStateMachine` provides a KVO-observable `state` property.  
 @interface MyStateMachine : CNCHStateMachine
 
 // Method signatures with updated types
-- (nullable instancetype)initWithState:(nonnull id<MyStateful>)state NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithState:(nonnull id<MyStateful>)state NS_DESIGNATED_INITIALIZER;
 @property (nullable, readonly) id<MyStateful> state;
 
 // New delegate property
