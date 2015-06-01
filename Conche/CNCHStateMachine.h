@@ -10,23 +10,25 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  This notification is posted on the \c CNCHStateMachine object's private serial queue
  when @c[CNCHStateMachine resume]; is called.
  */
-FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineResumedNotification;
+FOUNDATION_EXPORT NSString * const CNCHStateMachineResumedNotification;
 
 /*!
  This notification is posted on the \c CNCHStateMachine object's private serial queue
  when @c[CNCHStateMachine suspend]; is called.
  */
-FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineSuspendedNotification;
+FOUNDATION_EXPORT NSString * const CNCHStateMachineSuspendedNotification;
 
 /*!
  This notification is posted on the \c CNCHStateMachine object's private serial queue
  upon the object getting invalidated via @c[CNCHStateMachine invalidate];.
  */
-FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotification;
+FOUNDATION_EXPORT NSString * const CNCHStateMachineInvalidatedNotification;
 
 @class CNCHStateMachine;
 
@@ -46,7 +48,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
  @param completionHandler The completion hander where the resulting state should be passed into.
  If it is invoked more than once, the state machine will throw an \c NSInternalInconsistencyException.
  */
-- (void)stateMachine:(nonnull CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(nonnull void(^)(__nullable id<CNCHStateful> state))completionHandler;
+- (void)stateMachine:(CNCHStateMachine *)stateMachine transitionWithCompletionHandler:(void(^)(__nullable id<CNCHStateful> state))completionHandler;
 
 @end
 
@@ -54,7 +56,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
 
 @interface CNCHStateMachine : NSObject
 
-- (nonnull instancetype)init NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 /*!
  @brief Returns a new \c CNCHStateMachine object with its initial state set to \c state.
@@ -66,7 +68,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
  
  @return A new \c CNCHStateMachine object with its initial state set to \c state.
  */
-- (nonnull instancetype)initWithState:(nonnull id<CNCHStateful>)state NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithState:(id<CNCHStateful>)state NS_DESIGNATED_INITIALIZER;
 
 
 /*!
@@ -111,7 +113,7 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
  processing state is flushed.
  
  */
-- (void)flushWithCompletionHandler:(nonnull void(^)(void))completionHandler;
+- (void)flushWithCompletionHandler:(void(^)(void))completionHandler;
 
 
 /*!
@@ -120,3 +122,5 @@ FOUNDATION_EXPORT NSString * __nonnull const CNCHStateMachineInvalidatedNotifica
 @property (nullable, readonly) id<CNCHStateful> state;
 
 @end
+
+NS_ASSUME_NONNULL_END
