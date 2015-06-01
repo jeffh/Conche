@@ -9,6 +9,7 @@
 //	of the MIT license.  See the LICENSE file for details.
 
 #import "CNCHStateMachine.h"
+#import <libkern/OSAtomic.h>
 
 NSString * const CNCHStateMachineResumedNotification = @"CNCHStateMachineResumedNotification";
 NSString * const CNCHStateMachineSuspendedNotification = @"CNCHStateMachineSuspendedNotification";
